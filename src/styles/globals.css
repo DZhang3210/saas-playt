@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 html,
 body,
 :root {
@@ -72,4 +74,25 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* .cl-button {
+  @apply h-[4rem] w-[4rem];
+}
+.cl-avatarImage {
+  @apply h-[4rem] w-[4rem];
+} */
+
+.cl-avatarBox {
+  @apply h-[3rem] w-[3rem];
+}
+.cl-formButtonPrimary {
+  @apply bg-red-400;
+}
+
+.montseratt {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
