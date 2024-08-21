@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Empty from "@/components/empty";
 import { Loader } from "@/components/loader";
+import { useProModal } from "hooks/use-pro-modal";
 
 // Define message type (ensure it matches the type returned by OpenAI)
 type Message = {
@@ -28,6 +29,7 @@ type Message = {
 };
 
 export default function VideoPage() {
+  const proModal = useProModal();
   const router = useRouter();
   const [video, setVideo] = useState<string>();
 
@@ -52,8 +54,9 @@ export default function VideoPage() {
       setVideo(response.data[0]);
       form.reset();
     } catch (error: any) {
-      // TODO: Handle errors appropriately
-      console.error(error);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      }
     } finally {
       router.refresh();
     }

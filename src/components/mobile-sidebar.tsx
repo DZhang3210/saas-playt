@@ -6,7 +6,11 @@ import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import Sidebar from "./sidebar";
 
-export default function MobileSidebar() {
+type MobileSidebarProps = {
+  apiLimitCount: number;
+};
+
+export default function MobileSidebar({ apiLimitCount }: MobileSidebarProps) {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
@@ -24,7 +28,7 @@ export default function MobileSidebar() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="border-0 p-0">
-          <Sidebar />
+          <Sidebar apiLimitCount={apiLimitCount} />
         </SheetContent>
       </Sheet>
     </div>

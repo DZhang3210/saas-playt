@@ -6,6 +6,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import "../styles/globals.css";
+import { ModalProvider } from "@/components/modal-provider";
 export default function RootLayout({
   children,
 }: {
@@ -15,12 +16,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
-          {/* <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn> */}
+          <ModalProvider />
           {children}
         </body>
       </html>

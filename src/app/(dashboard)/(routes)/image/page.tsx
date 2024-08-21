@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
+import { useProModal } from "hooks/use-pro-modal";
 
 // Define message type (ensure it matches the type returned by OpenAI)
 type Message = {
@@ -37,6 +38,7 @@ type Message = {
 };
 
 export default function ImagePage() {
+  const proModal = useProModal();
   const router = useRouter();
   const [images, setImages] = useState<string[]>([]);
 
@@ -60,8 +62,9 @@ export default function ImagePage() {
       setImages(urls);
       form.reset();
     } catch (error: any) {
-      // TODO: Handle errors appropriately
-      console.error(error);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      }
     } finally {
       router.refresh();
     }

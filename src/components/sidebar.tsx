@@ -13,8 +13,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import FreeCounter from "./freeCounter";
 
-export default function Sidebar() {
+type SidebarProps = {
+  apiLimitCount: number;
+};
+
+export default function Sidebar({ apiLimitCount = 0 }: SidebarProps) {
   const routes = [
     {
       label: "Dashboard",
@@ -90,6 +95,7 @@ export default function Sidebar() {
           ))}
         </div>
       </div>
+      <FreeCounter apiLimitCount={apiLimitCount} />
     </div>
   );
 }
