@@ -22,6 +22,8 @@ import {
 import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
+import axios from "axios";
+import { useState } from "react";
 
 export const ProModal = () => {
   const tools = [
@@ -57,17 +59,29 @@ export const ProModal = () => {
     },
   ];
   const proModal = useProModal();
+  const [loading, setLoading] = useState(false);
+  const onSubscribe = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("/api/stripe");
+      window.location.href = response.data.url;
+    } catch (err) {
+      console.log(err, "STRIPE_CLIENT_ERROR");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-col items-center justify-center gap-y-4 pb-2">
-            <div className="flex items-center gap-x-2 py-1 font-bold">
+            <span className="flex items-center gap-x-2 py-1 font-bold">
               Upgrade to Genius
               <Badge variant="premium" className="py-1 text-sm uppercase">
                 pro
               </Badge>
-            </div>
+            </span>
           </DialogTitle>
           <DialogDescription className="space-y-2 pt-2 text-center font-medium text-zinc-900">
             {tools.map((tool) => (
@@ -87,7 +101,13 @@ export const ProModal = () => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button size="lg" variant="premium" className="w-full">
+          <Button
+            size="lg"
+            variant="premium"
+            className="w-full"
+            onClick={onSubscribe}
+            disabled={loading}
+          >
             Upgrade
             <Zap className="ml-2 h-4 w-4 fill-white" />
           </Button>
