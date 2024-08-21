@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { ChatCompletion } from "openai/resources/index.mjs";
 
 // Initialize the configuration
 const openai = new OpenAI({

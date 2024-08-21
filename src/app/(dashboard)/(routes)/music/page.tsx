@@ -43,7 +43,11 @@ export default function MusicPage() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setMusic(undefined);
-      const response = await axios.post("/api/music");
+      console.log(values);
+      const response = await axios.post("/api/music", {
+        prompt: values.prompt,
+      });
+      console.log("RESPONSE", response);
 
       setMusic(response.data.audio);
       form.reset();
@@ -103,12 +107,16 @@ export default function MusicPage() {
               <Loader />
             </div>
           )}
-          {music && !isLoading && (
+          {!music && !isLoading && (
             <div>
               <Empty label="No music generated." />
             </div>
           )}
-          <div>Music will be generated here</div>
+          {music && (
+            <audio controls className="mt-8 w-full">
+              <source src={music} />
+            </audio>
+          )}
         </div>
       </div>
     </div>
