@@ -2,7 +2,7 @@
 
 import Heading from "@/components/heading";
 import * as z from "zod";
-import { Music, VideoIcon } from "lucide-react";
+import { VideoIcon } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
@@ -24,10 +24,6 @@ import { useProModal } from "hooks/use-pro-modal";
 import toast from "react-hot-toast";
 
 // Define message type (ensure it matches the type returned by OpenAI)
-type Message = {
-  role: string;
-  content: string;
-};
 
 export default function VideoPage() {
   const proModal = useProModal();
@@ -50,15 +46,16 @@ export default function VideoPage() {
       const response = await axios.post("/api/video", {
         prompt: values.prompt,
       });
-      console.log("RESPONSE", response);
 
-      setVideo(response.data[0]);
+      setVideo(response?.data[0]);
       form.reset();
     } catch (error: any) {
-      if (error?.response?.status === 403) {
-        proModal.onOpen();
-      } else {
-        toast.error("Something went wrong");
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.status === 403) {
+          proModal.onOpen();
+        } else {
+          toast.error("Something went wrong");
+        }
       }
     } finally {
       router.refresh();

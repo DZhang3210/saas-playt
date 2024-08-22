@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { ChatCompletion } from "openai/resources/index.mjs";
 import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
@@ -24,8 +23,8 @@ export async function POST(req: Request) {
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { messages } = body;
-    console.log(messages);
+    const { messages }: { messages: ChatCompletionRequestMessage[] } = body;
+    // console.log(messages);
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });

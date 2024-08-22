@@ -9,17 +9,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-type ChatCompletionRequestMessage = {
-  role: "system" | "user" | "assistant";
-  content: string;
-};
-
-const instructionMessage: ChatCompletionRequestMessage = {
-  role: "system",
-  content:
-    "You are a code generator. You must only answer in markdown code snippets. Use code comments for explanations.",
-};
-
 export async function POST(req: Request) {
   try {
     const { userId } = auth();
@@ -52,7 +41,7 @@ export async function POST(req: Request) {
 
     const response = await openai.images.generate({
       prompt: prompt,
-      n: parseInt(amount, 10),
+      n: parseInt(amount as string, 10),
       size: resolution,
     });
 

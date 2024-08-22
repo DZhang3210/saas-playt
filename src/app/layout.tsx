@@ -1,10 +1,4 @@
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import "../styles/globals.css";
 import { ModalProvider } from "@/components/modal-provider";
 import ToastProvider from "@/components/toaster-provider";

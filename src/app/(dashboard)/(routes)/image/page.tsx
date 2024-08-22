@@ -33,9 +33,8 @@ import { useProModal } from "hooks/use-pro-modal";
 import toast from "react-hot-toast";
 
 // Define message type (ensure it matches the type returned by OpenAI)
-type Message = {
-  role: string;
-  content: string;
+type Image = {
+  url: string;
 };
 
 export default function ImagePage() {
@@ -58,15 +57,17 @@ export default function ImagePage() {
     try {
       console.log(values);
       setImages([]);
-      const response = await axios.post("/api/image", values);
+      const response = await axios.post<Image[]>("/api/image", values);
       const urls = response.data.map((image: { url: string }) => image.url);
       setImages(urls);
       form.reset();
-    } catch (error: any) {
-      if (error?.response?.status === 403) {
-        proModal.onOpen();
-      } else {
-        toast.error("Something went wrong");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.status === 403) {
+          proModal.onOpen();
+        } else {
+          toast.error("Something went wrong");
+        }
       }
     } finally {
       router.refresh();

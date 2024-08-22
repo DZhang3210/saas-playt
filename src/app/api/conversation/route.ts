@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
+import { CreateChatCompletionRequestMessage } from "openai/resources/index.mjs";
 
 // Initialize the configuration
 const openai = new OpenAI({
@@ -13,7 +14,8 @@ export async function POST(req: Request) {
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { messages } = body;
+    const { messages }: { messages: CreateChatCompletionRequestMessage[] } =
+      body;
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });

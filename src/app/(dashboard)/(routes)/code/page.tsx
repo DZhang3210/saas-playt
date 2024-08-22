@@ -55,17 +55,19 @@ export default function CodePage() {
       };
 
       const newMessages = [...messages, userMessage];
-      const response = await axios.post("/api/code", {
+      const response = await axios.post<Message>("/api/code", {
         messages: newMessages,
       });
 
       setMessages((current) => [...current, userMessage, response.data]);
       form.reset();
-    } catch (error: any) {
-      if (error?.response?.status === 403) {
-        proModal.onOpen();
-      } else {
-        toast.error("Something went wrong");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.status === 403) {
+          proModal.onOpen();
+        } else {
+          toast.error("Something went wrong");
+        }
       }
     } finally {
       router.refresh();

@@ -4,7 +4,6 @@ import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 import TypewriterComponent from "typewriter-effect";
-import TypeWriterComponet from "typewriter-effect";
 import { Button } from "./ui/button";
 
 export default function LandingHero() {

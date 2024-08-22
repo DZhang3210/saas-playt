@@ -24,10 +24,6 @@ import { useProModal } from "hooks/use-pro-modal";
 import toast from "react-hot-toast";
 
 // Define message type (ensure it matches the type returned by OpenAI)
-type Message = {
-  role: string;
-  content: string;
-};
 
 export default function MusicPage() {
   const proModal = useProModal();
@@ -47,18 +43,19 @@ export default function MusicPage() {
     try {
       setMusic(undefined);
       console.log(values);
-      const response = await axios.post("/api/music", {
+      const response = await axios.post<{ audio: string }>("/api/music", {
         prompt: values.prompt,
       });
       console.log("RESPONSE", response);
-
-      setMusic(response.data.audio);
+      setMusic(response?.data?.audio);
       form.reset();
     } catch (error: any) {
-      if (error?.response?.status === 403) {
-        proModal.onOpen();
-      } else {
-        toast.error("Something went wrong");
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.status === 403) {
+          proModal.onOpen();
+        } else {
+          toast.error("Something went wrong");
+        }
       }
     } finally {
       router.refresh();
