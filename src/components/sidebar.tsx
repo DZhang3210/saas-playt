@@ -17,9 +17,13 @@ import FreeCounter from "./freeCounter";
 
 type SidebarProps = {
   apiLimitCount: number;
+  isPro: boolean;
 };
 
-export default function Sidebar({ apiLimitCount = 0 }: SidebarProps) {
+export default function Sidebar({
+  apiLimitCount = 0,
+  isPro = false,
+}: SidebarProps) {
   const routes = [
     {
       label: "Dashboard",
@@ -95,7 +99,7 @@ export default function Sidebar({ apiLimitCount = 0 }: SidebarProps) {
           ))}
         </div>
       </div>
-      <FreeCounter apiLimitCount={apiLimitCount} />
+      <FreeCounter isPro={isPro} apiLimitCount={apiLimitCount} />
     </div>
   );
 }
