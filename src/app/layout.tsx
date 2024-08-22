@@ -7,6 +7,7 @@ import {
 } from "@clerk/nextjs";
 import "../styles/globals.css";
 import { ModalProvider } from "@/components/modal-provider";
+import ToastProvider from "@/components/toaster-provider";
 export default function RootLayout({
   children,
 }: {
@@ -17,6 +18,7 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <ModalProvider />
+          <ToastProvider />
           {children}
         </body>
       </html>
