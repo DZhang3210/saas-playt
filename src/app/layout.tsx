@@ -8,6 +8,7 @@ import {
 import "../styles/globals.css";
 import { ModalProvider } from "@/components/modal-provider";
 import ToastProvider from "@/components/toaster-provider";
+import CrispProvider from "@/components/crisp-provider";
 export default function RootLayout({
   children,
 }: {
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <CrispProvider />
         <body>
           <ModalProvider />
           <ToastProvider />

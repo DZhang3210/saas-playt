@@ -30,6 +30,7 @@ import {
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { useProModal } from "hooks/use-pro-modal";
+import toast from "react-hot-toast";
 
 // Define message type (ensure it matches the type returned by OpenAI)
 type Message = {
